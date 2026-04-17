@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishGuard AI — URL Scanner</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡</text></svg>" />
+  <style>
+    .scan-card { animation: fadeUp .55s ease .04s both; margin-bottom: 22px; }
+    .recent-sec { animation: fadeUp .55s ease .18s both; }
+    .cursor-blink {
+      display: inline-block; width: 3px; height: .85em;
+      background: var(--accent); vertical-align: text-bottom;
+      margin-left: 3px; animation: cur 1s step-end infinite;
+    }
+    @keyframes cur { 0%,100%{opacity:1}50%{opacity:0} }
+    #emailStatus {
+      display: none; margin-top: 10px;
+      font-family: var(--mono); font-size: 11px; letter-spacing: .5px;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-brand-hex">🛡</div>
+    <span class="nav-brand-name">PHISH<em>GUARD</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">SCAN</a></li>
+    <li><a href="history.html">HISTORY</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="nav-dot" id="navDot"></div>
+    <span id="navStatus">CHECKING</span>
+  </div>
+</nav>
+
+<main class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">AI-Powered Threat Detection</div>
+    <h1>PHISHGUARD AI<span class="cursor-blink"></span></h1>
+    <p class="hero-sub">Paste any URL for instant ML-based phishing analysis</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row" id="statsRow">
+    <div class="stat-card">
+      <div class="stat-card-num" id="stTotal" style="color:var(--accent)">0</div>
+      <div class="stat-card-lbl">Total Scanned</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-num" id="stPhish" style="color:var(--danger)">0</div>
+      <div class="stat-card-lbl">Threats Found</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-num" id="stSafe" style="color:var(--safe)">0</div>
+      <div class="stat-card-lbl">Safe URLs</div>
+    </div>
+  </div>
+
+  <!-- Scanner card -->
+  <div class="card scan-card">
+    <div class="sh">URL SCANNER</div>
+
+    <!-- Real-time toggle -->
+    <div class="toggle-row">
+      <div class="toggle-info">
+        <span style="font-size:18px">🛡</span>
+        <div>
+          <div class="toggle-label" id="rtLabel">Real-Time Protection: ON</div>
+          <div class="toggle-sub">Auto-scan pages via Chrome extension</div>
+        </div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="rtToggle" checked />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <!-- Input -->
+    <div class="input-group">
+      <div class="input-wrap">
+        <input
+          class="url-input" type="text" id="urlInput"
+          placeholder="https://suspicious-paypal-verify.xyz/login"
+          autocomplete="off" spellcheck="false"
+        />
+      </div>
+      <button class="btn-scan" id="scanBtn">SCAN NOW</button>
+    </div>
+    <p class="input-hint">Try: https://paypal-secure-verify.xyz/account or https://google.com</p>
+
+    <div id="errorMsg"></div>
+
+    <!-- Loader -->
+    <div id="loaderWrap">
+      <div class="spinner"></div>
+      <div class="loader-txt">ANALYZING URL STRUCTURE...</div>
+    </div>
+
+    <!-- Result -->
+    <div id="resultWrap">
+      <hr class="result-divider" />
+
+      <div class="result-head">
+        <div class="result-icon-box" id="resultIcon">🔍</div>
+        <div>
+          <div class="result-verdict" id="resultVerdict">—</div>
+          <div class="result-url-txt" id="resultUrl">—</div>
+        </div>
+      </div>
+
+      <div class="result-stats">
+        <div class="rs">
+          <div class="rs-lbl">PREDICTION</div>
+          <div class="rs-val" id="rsPred">—</div>
+        </div>
+        <div class="rs">
+          <div class="rs-lbl">CONFIDENCE</div>
+          <div class="rs-val" id="rsConf">—</div>
+        </div>
+      </div>
+
+      <div class="conf-wrap">
+        <div class="conf-header">
+          <span class="conf-lbl">THREAT CONFIDENCE</span>
+          <span class="conf-pct" id="confPct">0%</span>
+        </div>
+        <div class="conf-track">
+          <div class="conf-fill" id="confFill"></div>
+        </div>
+      </div>
+
+      <div id="reasonsList" style="display:none"></div>
+
+      <div id="warnBanner">
+        ⚠ PHISHING DETECTED — Do NOT enter any credentials or personal data on this site.
+      </div>
+
+      <div id="emailStatus"></div>
+    </div>
+  </div>
+
+  <!-- Recent activity -->
+  <div class="recent-sec">
+    <div class="sh">RECENT ACTIVITY</div>
+    <div id="recentFeed">
+      <div class="empty">No scans yet — scan your first URL above</div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-brand">PHISH<em>GUARD</em> AI v2.0</div>
+  <div class="footer-info">ML-Powered · Real-Time · Privacy-First</div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  setActive('index');
+  initScan();
+  initToggle();
+  checkHealth();
+  refreshStats();
+  refreshFeed();
+
+  function refreshStats() {
+    const h     = getHistory();
+    const total = h.length;
+    const phish = h.filter(e => Number(e.prediction) === 1).length;
+    cnt('stTotal', total);
+    cnt('stPhish', phish);
+    cnt('stSafe',  total - phish);
+  }
+
+  function cnt(id, target) {
+    const el = $(id); if (!el) return;
+    const from = parseInt(el.textContent) || 0;
+    const dur = 550, t0 = performance.now();
+    const step = now => {
+      const p = Math.min((now - t0) / dur, 1);
+      el.textContent = Math.round(from + (target - from) * p);
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  function refreshFeed() {
+    const el = $('recentFeed'); if (!el) return;
+    const items = getHistory().slice(0, 6);
+    if (!items.length) {
+      el.innerHTML = '<div class="empty">No scans yet — scan your first URL above</div>';
+      return;
+    }
+    el.innerHTML = items.map(it => {
+      const cls   = Number(it.prediction) === 1 ? 'danger' : 'safe';
+      const badge = Number(it.prediction) === 1 ? 'PHISHING' : 'SAFE';
+      const time  = it.time ? new Date(it.time).toLocaleTimeString() : '—';
+      return `<div class="feed-item">
+        <div class="feed-dot ${cls}"></div>
+        <span class="feed-url" title="${esc(it.url)}">${esc(it.url)}</span>
+        <span class="feed-badge ${cls}">${badge}</span>
+        <span class="feed-time">${time}</span>
+      </div>`;
+    }).join('');
+  }
+
+  window._afterScan = () => { refreshStats(); refreshFeed(); };
+</script>
+</body>
+</html>

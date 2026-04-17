@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishGuard AI — Contact</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡</text></svg>" />
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-brand-hex">🛡</div>
+    <span class="nav-brand-name">PHISH<em>GUARD</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">SCAN</a></li>
+    <li><a href="history.html">HISTORY</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="nav-dot" id="navDot"></div>
+    <span id="navStatus">CHECKING</span>
+  </div>
+</nav>
+
+<main class="page">
+
+  <div class="hero">
+    <div class="hero-badge">Get In Touch</div>
+    <h1>CONTACT</h1>
+    <p class="hero-sub">Report a false positive, suggest a feature, or ask for support</p>
+  </div>
+
+  <div class="contact-grid">
+
+    <!-- Form -->
+    <div class="card" style="animation:fadeUp .55s ease both">
+      <div class="sh">SEND MESSAGE</div>
+
+      <div id="formSuccess" class="form-success">
+        ✅ Message sent! We'll get back to you within 24 hours.
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="fName">Your Name</label>
+        <input class="form-input" type="text" id="fName" placeholder="John Doe" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="fEmail">Email Address</label>
+        <input class="form-input" type="email" id="fEmail" placeholder="you@example.com" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="fSubject">Subject</label>
+        <select class="form-select" id="fSubject">
+          <option value="">Select a topic...</option>
+          <option value="false-positive">False Positive Report</option>
+          <option value="false-negative">Missed Phishing URL</option>
+          <option value="feature">Feature Request</option>
+          <option value="bug">Bug Report</option>
+          <option value="extension">Chrome Extension Issue</option>
+          <option value="api">API / Backend Issue</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="fUrl">URL (if applicable)</label>
+        <input class="form-input" type="text" id="fUrl" placeholder="https://suspicious-site.com" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="fMsg">Message</label>
+        <textarea class="form-textarea" id="fMsg" placeholder="Describe your issue or feedback in detail..."></textarea>
+      </div>
+
+      <div id="formError" style="display:none;padding:10px 14px;background:rgba(255,170,0,.05);border:1px solid rgba(255,170,0,.3);border-radius:5px;font-family:var(--mono);font-size:11px;color:var(--warn);margin-bottom:14px;"></div>
+
+      <button class="btn-scan" id="submitBtn" style="width:100%">SEND MESSAGE</button>
+    </div>
+
+    <!-- Info panel -->
+    <div>
+      <div class="contact-info-card" style="margin-bottom:16px;animation:fadeUp .55s ease .06s both">
+        <div class="contact-info-title">SUPPORT CHANNELS</div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">📧</div>
+          <div>
+            <div class="contact-info-lbl">Email Support</div>
+            <div class="contact-info-val">support@phishguard.ai</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">🐛</div>
+          <div>
+            <div class="contact-info-lbl">Bug Reports</div>
+            <div class="contact-info-val">github.com/phishguard/issues</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">📚</div>
+          <div>
+            <div class="contact-info-lbl">Documentation</div>
+            <div class="contact-info-val">docs.phishguard.ai</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">⏱</div>
+          <div>
+            <div class="contact-info-lbl">Response Time</div>
+            <div class="contact-info-val">Usually within 24 hours</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-info-card" style="animation:fadeUp .55s ease .1s both">
+        <div class="contact-info-title">SYSTEM STATUS</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div class="nav-dot" id="statusDot2" style="width:9px;height:9px"></div>
+          <span style="font-family:var(--mono);font-size:12px" id="statusTxt2">Checking backend...</span>
+        </div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text3);line-height:1.7">
+          Backend: <span style="color:var(--text2)">Flask + scikit-learn</span><br>
+          Endpoint: <span style="color:var(--accent)">POST /api/scan</span><br>
+          Port: <span style="color:var(--text2)">5000</span>
+        </div>
+        <div style="margin-top:14px">
+          <a href="index.html" class="btn-filled-accent" style="display:block;text-align:center">
+            ⚡ SCAN A URL NOW
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAQ -->
+  <div class="sh" style="animation:fadeUp .55s ease .15s both">FREQUENTLY ASKED</div>
+  <div style="display:flex;flex-direction:column;gap:10px;animation:fadeUp .55s ease .18s both">
+    <div class="card">
+      <div style="font-family:var(--mono);font-size:12px;color:var(--accent);margin-bottom:6px">How accurate is the detection?</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.7">The Random Forest model achieves ~99% accuracy on test data. The heuristic fallback covers cases where the model file isn't available.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:var(--mono);font-size:12px;color:var(--accent);margin-bottom:6px">Does it visit the suspicious URL?</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.7">No. Analysis is purely structural — we parse URL features (length, symbols, keywords, TLD) without making any HTTP request to the target.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:var(--mono);font-size:12px;color:var(--accent);margin-bottom:6px">How do I set up email alerts?</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.7">Set <code style="background:var(--bg2);padding:1px 6px;border-radius:3px;font-family:var(--mono);font-size:11px">EMAIL_SENDER</code>, <code style="background:var(--bg2);padding:1px 6px;border-radius:3px;font-family:var(--mono);font-size:11px">EMAIL_PASSWORD</code>, and <code style="background:var(--bg2);padding:1px 6px;border-radius:3px;font-family:var(--mono);font-size:11px">EMAIL_RECEIVER</code> env variables. Use a Gmail App Password (not your regular password). Alerts have a 5-minute per-URL cooldown.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:var(--mono);font-size:12px;color:var(--accent);margin-bottom:6px">Can I deploy this publicly?</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.7">Yes. Deploy the Flask backend to Render or Railway (free tier). Host the frontend on GitHub Pages or Netlify. Update <code style="background:var(--bg2);padding:1px 6px;border-radius:3px;font-family:var(--mono);font-size:11px">API_SCAN</code> in script.js to your deployed backend URL.</div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-brand">PHISH<em>GUARD</em> AI v2.0</div>
+  <div class="footer-info">Open Source · MIT License</div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  setActive('contact');
+  checkHealth();
+
+  // Mirror status to the card
+  const origCheck = checkHealth;
+  setTimeout(() => {
+    const dot = document.getElementById('navDot');
+    const lbl = document.getElementById('navStatus');
+    const d2  = document.getElementById('statusDot2');
+    const l2  = document.getElementById('statusTxt2');
+    if (dot && d2) {
+      d2.className = dot.className;
+      d2.style.width = '9px'; d2.style.height = '9px';
+    }
+    if (lbl && l2) l2.textContent = 'Backend: ' + lbl.textContent;
+  }, 2500);
+
+  // Form submit (UI only)
+  document.getElementById('submitBtn').addEventListener('click', () => {
+    const name  = document.getElementById('fName').value.trim();
+    const email = document.getElementById('fEmail').value.trim();
+    const subj  = document.getElementById('fSubject').value;
+    const msg   = document.getElementById('fMsg').value.trim();
+    const errEl = document.getElementById('formError');
+
+    errEl.style.display = 'none';
+
+    if (!name)  { errEl.textContent = '⚠ Please enter your name.';    errEl.style.display = 'block'; return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errEl.textContent = '⚠ Please enter a valid email address.';
+      errEl.style.display = 'block'; return;
+    }
+    if (!subj)  { errEl.textContent = '⚠ Please select a subject.';   errEl.style.display = 'block'; return; }
+    if (!msg)   { errEl.textContent = '⚠ Please write a message.';    errEl.style.display = 'block'; return; }
+
+    // Simulate submission
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = 'SENDING...';
+    setTimeout(() => {
+      document.getElementById('formSuccess').style.display = 'block';
+      ['fName','fEmail','fUrl','fMsg'].forEach(id => { document.getElementById(id).value = ''; });
+      document.getElementById('fSubject').value = '';
+      btn.disabled = false; btn.textContent = 'SEND MESSAGE';
+    }, 1200);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishGuard AI — About</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡</text></svg>" />
+  <style>
+    .arch-wrap {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 0; margin-bottom: 36px;
+      animation: fadeUp .55s ease .08s both;
+    }
+    .arch-box {
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: var(--r); padding: 16px 20px; text-align: center;
+      min-width: 110px;
+    }
+    .arch-box.hl  { border-color: var(--accent); box-shadow: 0 0 14px var(--accent-glow); }
+    .arch-box.safe-b { border-color: var(--safe); box-shadow: 0 0 12px var(--safe-glow); }
+    .arch-box.danger-b { border-color: var(--danger); box-shadow: 0 0 12px var(--danger-glow); }
+    .arch-ico { font-size: 20px; margin-bottom: 5px; }
+    .arch-lbl { font-family: var(--display); font-size: 9px; font-weight: 700; letter-spacing: 2px; color: var(--text); }
+    .arch-sub { font-family: var(--mono); font-size: 9px; color: var(--text3); margin-top: 2px; }
+    .arch-arr { color: var(--text3); font-size: 18px; padding: 0 8px; align-self: center; flex-shrink: 0; }
+    .arch-or  { padding: 0 14px; color: var(--text3); font-family: var(--mono); font-size: 11px; align-self: center; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-brand-hex">🛡</div>
+    <span class="nav-brand-name">PHISH<em>GUARD</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">SCAN</a></li>
+    <li><a href="history.html">HISTORY</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="nav-dot" id="navDot"></div>
+    <span id="navStatus">CHECKING</span>
+  </div>
+</nav>
+
+<main class="page">
+
+  <div class="hero">
+    <div class="hero-badge">System Overview</div>
+    <h1>HOW IT WORKS</h1>
+    <p class="hero-sub">Machine learning meets real-time cybersecurity protection</p>
+  </div>
+
+  <!-- Architecture -->
+  <div class="sh" style="animation:fadeUp .55s ease both">SYSTEM ARCHITECTURE</div>
+  <div class="card" style="margin-bottom:28px;animation:fadeUp .55s ease .04s both">
+    <div class="arch-wrap">
+      <div class="arch-box"><div class="arch-ico">🌐</div><div class="arch-lbl">BROWSER</div><div class="arch-sub">Web UI / Extension</div></div>
+      <div class="arch-arr">→</div>
+      <div class="arch-box hl"><div class="arch-ico">⚡</div><div class="arch-lbl">FLASK API</div><div class="arch-sub">POST /api/scan</div></div>
+      <div class="arch-arr">→</div>
+      <div class="arch-box"><div class="arch-ico">🔬</div><div class="arch-lbl">FEATURE EXT</div><div class="arch-sub">12 URL features</div></div>
+      <div class="arch-arr">→</div>
+      <div class="arch-box"><div class="arch-ico">🌲</div><div class="arch-lbl">RANDOM FOREST</div><div class="arch-sub">.pkl model</div></div>
+    </div>
+    <div style="text-align:center;font-family:var(--mono);font-size:11px;color:var(--text3);margin:4px 0 20px">↓ prediction + confidence + reasons</div>
+    <div class="arch-wrap" style="margin-bottom:0">
+      <div class="arch-box safe-b"><div class="arch-ico">✅</div><div class="arch-lbl">SAFE</div><div class="arch-sub">prediction: 0</div></div>
+      <div class="arch-or">OR</div>
+      <div class="arch-box danger-b"><div class="arch-ico">☠️</div><div class="arch-lbl">PHISHING</div><div class="arch-sub">prediction: 1 + email alert</div></div>
+    </div>
+  </div>
+
+  <!-- Pipeline steps -->
+  <div class="sh" style="animation:fadeUp .55s ease .07s both">DETECTION PIPELINE</div>
+  <div class="flow-row" style="margin-bottom:28px">
+    <div class="flow-box"><div class="flow-num">STEP 01</div><div class="flow-ico">🔗</div><div class="flow-lbl">URL INPUT</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box"><div class="flow-num">STEP 02</div><div class="flow-ico">⚙️</div><div class="flow-lbl">EXTRACT 12 FEATURES</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box"><div class="flow-num">STEP 03</div><div class="flow-ico">🧠</div><div class="flow-lbl">ML INFERENCE</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box"><div class="flow-num">STEP 04</div><div class="flow-ico">📊</div><div class="flow-lbl">VERDICT + REASONS</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box"><div class="flow-num">STEP 05</div><div class="flow-ico">📧</div><div class="flow-lbl">EMAIL ALERT</div></div>
+  </div>
+
+  <!-- Feature table -->
+  <div class="sh" style="animation:fadeUp .55s ease .1s both">EXTRACTED FEATURES (12)</div>
+  <div class="ml-table-wrap">
+    <table class="ml-table">
+      <thead><tr><th>#</th><th>Feature</th><th>Description</th><th>Phishing Signal</th></tr></thead>
+      <tbody>
+        <tr><td>00</td><td>url_length</td><td>Total character length</td><td>Long URLs obscure malicious paths</td></tr>
+        <tr><td>01</td><td>dot_count</td><td>Number of dots</td><td>Subdomain abuse: login.paypal.evil.com</td></tr>
+        <tr><td>02</td><td>hyphen_count</td><td>Number of hyphens</td><td>paypal-secure-verify.evil.com</td></tr>
+        <tr><td>03</td><td>slash_count</td><td>Number of slashes</td><td>Deep fake paths mimicking real sites</td></tr>
+        <tr><td>04</td><td>at_count</td><td>@ symbol presence</td><td>http://legit.com@evil.com redirects</td></tr>
+        <tr><td>05</td><td>question_count</td><td>Number of ?</td><td>Excessive query tracking params</td></tr>
+        <tr><td>06</td><td>equals_count</td><td>Number of =</td><td>Parameter stuffing</td></tr>
+        <tr><td>07</td><td>digit_count</td><td>Total digits in URL</td><td>Random numbers mask fake domains</td></tr>
+        <tr><td>08</td><td>uses_https</td><td>HTTPS vs HTTP</td><td>No SSL = higher risk</td></tr>
+        <tr><td>09</td><td>keyword_count</td><td>Phishing keyword hits</td><td>login, verify, secure, paypal…</td></tr>
+        <tr><td>10</td><td>subdomain_depth</td><td>Subdomain nesting level</td><td>Deep nesting hides real domain</td></tr>
+        <tr><td>11</td><td>tld_suspicious</td><td>Suspicious TLD flag</td><td>.xyz .tk .ml .ga .cf .top…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Platform features -->
+  <div class="sh" style="animation:fadeUp .55s ease .14s both">PLATFORM FEATURES</div>
+  <div class="feat-grid">
+    <div class="feat-card"><span class="feat-icon">🧠</span><div class="feat-title">AI DETECTION</div><div class="feat-desc">Random Forest classifier trained on 12 URL structural features delivers fast, accurate verdicts without visiting the target URL.</div></div>
+    <div class="feat-card"><span class="feat-icon">🔌</span><div class="feat-title">CHROME EXTENSION</div><div class="feat-desc">Manifest V3 extension auto-scans every page you visit. Injects a warning banner and badge when threats are detected in real time.</div></div>
+    <div class="feat-card"><span class="feat-icon">📧</span><div class="feat-title">EMAIL ALERTS</div><div class="feat-desc">Automated HTML email via Gmail SMTP when phishing is detected. 5-minute per-URL cooldown prevents duplicate notifications.</div></div>
+    <div class="feat-card"><span class="feat-icon">📊</span><div class="feat-title">SCAN HISTORY</div><div class="feat-desc">Last 20 scans stored in localStorage with filtering, CSV export, and summary statistics. No server-side logging.</div></div>
+    <div class="feat-card"><span class="feat-icon">⚡</span><div class="feat-title">REST API</div><div class="feat-desc">Flask REST API with CORS on all origins. POST any URL to /api/scan and receive prediction, confidence, and threat reasons.</div></div>
+    <div class="feat-card"><span class="feat-icon">🔒</span><div class="feat-title">PRIVACY-FIRST</div><div class="feat-desc">Analysis is purely structural — the target URL is never visited. All browser data stays in localStorage. No tracking.</div></div>
+  </div>
+
+  <!-- Quick start -->
+  <div class="sh" style="animation:fadeUp .55s ease .2s both">🚀 QUICK START</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;animation:fadeUp .55s ease .22s both">
+    <div class="card">
+      <div style="font-family:var(--display);font-size:10px;letter-spacing:2px;color:var(--accent);margin-bottom:8px">STEP 01 — BACKEND</div>
+      <pre class="code-block">cd backend
+pip install -r requirements.txt
+python generate_model.py
+python app.py
+# → localhost:5000</pre>
+    </div>
+    <div class="card">
+      <div style="font-family:var(--display);font-size:10px;letter-spacing:2px;color:var(--accent);margin-bottom:8px">STEP 02 — FRONTEND</div>
+      <pre class="code-block">cd frontend
+# Open index.html in browser
+# or serve:
+python -m http.server 8080
+# → localhost:8080</pre>
+    </div>
+    <div class="card">
+      <div style="font-family:var(--display);font-size:10px;letter-spacing:2px;color:var(--accent);margin-bottom:8px">STEP 03 — EXTENSION</div>
+      <pre class="code-block">chrome://extensions
+→ Enable Developer Mode
+→ Load Unpacked
+→ Select extension/
+→ Click shield icon 🛡</pre>
+    </div>
+    <div class="card">
+      <div style="font-family:var(--display);font-size:10px;letter-spacing:2px;color:var(--accent);margin-bottom:8px">STEP 04 — EMAIL</div>
+      <pre class="code-block">export EMAIL_SENDER=\
+  you@gmail.com
+export EMAIL_PASSWORD=\
+  app_password_16chars
+export EMAIL_RECEIVER=\
+  admin@company.com</pre>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-brand">PHISH<em>GUARD</em> AI v2.0</div>
+  <div class="footer-info">Built with Flask · scikit-learn · Vanilla JS</div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  setActive('about');
+  checkHealth();
+</script>
+</body>
+</html>

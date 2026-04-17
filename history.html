@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishGuard AI — History</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡</text></svg>" />
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-brand-hex">🛡</div>
+    <span class="nav-brand-name">PHISH<em>GUARD</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">SCAN</a></li>
+    <li><a href="history.html">HISTORY</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="nav-dot" id="navDot"></div>
+    <span id="navStatus">CHECKING</span>
+  </div>
+</nav>
+
+<!-- Confirm modal -->
+<div class="modal-bg" id="clearModal">
+  <div class="modal-box">
+    <div class="modal-icon">🗑️</div>
+    <div class="modal-title">CLEAR HISTORY</div>
+    <div class="modal-desc">This deletes all 20 scan records permanently. Cannot be undone.</div>
+    <div class="modal-btns">
+      <button class="modal-cancel" id="cancelBtn">CANCEL</button>
+      <button class="modal-confirm" id="confirmBtn">DELETE ALL</button>
+    </div>
+  </div>
+</div>
+
+<main class="page">
+
+  <div class="hero" style="margin-bottom:36px">
+    <div class="hero-badge">Scan Log</div>
+    <h1>HISTORY</h1>
+    <p class="hero-sub">Last 20 scanned URLs stored locally in your browser</p>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary-grid" id="sumGrid">
+    <div class="sum-cell">
+      <div class="sum-cell-num" id="sumTotal" style="color:var(--accent)">0</div>
+      <div class="sum-cell-lbl">Total</div>
+    </div>
+    <div class="sum-cell">
+      <div class="sum-cell-num" id="sumPhish" style="color:var(--danger)">0</div>
+      <div class="sum-cell-lbl">Phishing</div>
+    </div>
+    <div class="sum-cell">
+      <div class="sum-cell-num" id="sumSafe" style="color:var(--safe)">0</div>
+      <div class="sum-cell-lbl">Safe</div>
+    </div>
+    <div class="sum-cell">
+      <div class="sum-cell-num" id="sumRate" style="color:var(--warn)">0%</div>
+      <div class="sum-cell-lbl">Threat Rate</div>
+    </div>
+  </div>
+
+  <!-- Filter -->
+  <div class="filter-bar">
+    <button class="filter-btn on" data-f="all">ALL</button>
+    <button class="filter-btn" data-f="phishing">PHISHING</button>
+    <button class="filter-btn" data-f="safe">SAFE</button>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="hist-toolbar">
+    <span class="hist-count" id="histCount">0 records</span>
+    <div class="toolbar-btns">
+      <button class="btn-outline-accent" id="exportBtn">↓ EXPORT CSV</button>
+      <button class="btn-outline-danger" id="clearBtn">✕ CLEAR ALL</button>
+      <a href="index.html" class="btn-filled-accent">+ NEW SCAN</a>
+    </div>
+  </div>
+
+  <!-- List -->
+  <div class="hist-list" id="histList"></div>
+
+</main>
+
+<footer>
+  <div class="footer-brand">PHISH<em>GUARD</em> AI v2.0</div>
+  <div class="footer-info">Stored in browser localStorage · Zero server logs</div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  setActive('history');
+  checkHealth();
+
+  let filter = 'all';
+
+  function render() {
+    const all   = getHistory();
+    const phish = all.filter(h => Number(h.prediction) === 1);
+    const safe  = all.filter(h => Number(h.prediction) === 0);
+    const rate  = all.length ? Math.round(phish.length / all.length * 100) : 0;
+
+    $('sumTotal').textContent = all.length;
+    $('sumPhish').textContent = phish.length;
+    $('sumSafe').textContent  = safe.length;
+    $('sumRate').textContent  = rate + '%';
+
+    const items = filter === 'phishing' ? phish : filter === 'safe' ? safe : all;
+    $('histCount').textContent = items.length + ' record' + (items.length !== 1 ? 's' : '');
+
+    const list = $('histList');
+    if (!items.length) {
+      const msg = filter === 'all'
+        ? 'No history yet. <a href="index.html" style="color:var(--accent)">Scan a URL →</a>'
+        : 'No ' + filter + ' URLs in history.';
+      list.innerHTML = '<div class="empty">' + msg + '</div>';
+      return;
+    }
+
+    list.innerHTML = items.map((it, i) => {
+      const cls   = Number(it.prediction) === 1 ? 'danger' : 'safe';
+      const badge = Number(it.prediction) === 1 ? 'PHISHING' : 'SAFE';
+      const pct   = Math.round(Number(it.confidence) * 100);
+      const ts    = it.time ? new Date(it.time) : new Date();
+      const d     = ts.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      const t     = ts.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+      return `<div class="hist-item ${cls}" style="animation:fadeUp .3s ease ${i*.04}s both">
+        <span class="hist-url" title="${esc(it.url)}">${esc(it.url)}</span>
+        <span class="hist-badge ${cls}">${badge}</span>
+        <span class="hist-conf">${pct}%</span>
+        <span class="hist-time">${d} ${t}</span>
+      </div>`;
+    }).join('');
+  }
+  render();
+
+  // Filters
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      filter = btn.dataset.f;
+      render();
+    });
+  });
+
+  // Clear
+  $('clearBtn').addEventListener('click', () => $('clearModal').classList.add('open'));
+  $('cancelBtn').addEventListener('click', () => $('clearModal').classList.remove('open'));
+  $('confirmBtn').addEventListener('click', () => {
+    clearHistory(); $('clearModal').classList.remove('open'); render();
+  });
+
+  // Export CSV
+  $('exportBtn').addEventListener('click', () => {
+    const h = getHistory();
+    if (!h.length) { alert('No history to export.'); return; }
+    const rows = [['URL','Result','Confidence','Time'], ...h.map(it => [
+      '"' + it.url.replace(/"/g, '""') + '"',
+      it.result || (Number(it.prediction) === 1 ? 'PHISHING' : 'SAFE'),
+      Math.round(Number(it.confidence) * 100) + '%',
+      it.time ? new Date(it.time).toLocaleString() : ''
+    ])];
+    const blob = new Blob([rows.map(r => r.join(',')).join('\n')], { type: 'text/csv' });
+    const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'phishguard-history.csv' });
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+</script>
+</body>
+</html>
