@@ -4,9 +4,8 @@
  * API endpoint: POST http://127.0.0.1:5000/api/scan
  */
 'use strict';
-
-const API_SCAN   = 'http://127.0.0.1:5000/api/scan';
-const API_HEALTH = 'http://127.0.0.1:5000/api/health';
+const API_SCAN   = 'https://phishguard-backend-dk7a.onrender.com/api/scan';
+const API_HEALTH = 'https://phishguard-backend-dk7a.onrender.com/api/health';
 const TIMEOUT_MS = 10000;
 const HISTORY_KEY = 'pg_history_v2';
 const TOGGLE_KEY  = 'pg_realtime';
