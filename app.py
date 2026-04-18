@@ -23,7 +23,7 @@ CORS(app, resources={r"/api/*": {
 # ── Email config (set via env or edit defaults) ───────────────────────────────
 EMAIL_SENDER   = os.environ.get("EMAIL_SENDER",   "hiteshikadian20@gmail.com")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD", "xasm oddi bbmy nzzm")
-EMAIL_RECEIVER = os.environ.get("EMAIL_RECEIVER", "hiteshikadian22@gmail.com")
+EMAIL_RECEIVER = os.environ.get("EMAIL_RECEIVER", "hiteshikadian20@gmail.com")
 SMTP_HOST, SMTP_PORT = "smtp.gmail.com", 587
 
 # Per-URL email cooldown (5 min)
