@@ -10,9 +10,6 @@ PhishGuard AI is a full-stack cybersecurity project that detects phishing URLs u
 🌐 Website:
 https://hiteshi2008.github.io/phishguard-ai
 
-⚙️ Backend API:
-https://phishguard-backend-dk7a.onrender.com
-
 🔥 Features
 
 🔍 URL Phishing Detection
